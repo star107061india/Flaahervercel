@@ -1,13 +1,7 @@
 {
-  "name": "pi-bot-vercel-static",
-  "version": "0.1.0",
+  "name": "pi-bot-static-api",
+  "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "dev": "echo 'Run index.html in a live server for development.'",
-    "build": "echo 'No build step needed for this static project.'",
-    "start": "echo 'This is a static project, no start command.'",
-    "lint": "echo 'No linting configured.'"
-  },
   "dependencies": {
     "axios": "^1.6.8",
     "bip39": "^3.1.0",
