@@ -1,4 +1,4 @@
-// File: api/getClaimableBalances.js (For Vercel)
+// File: api/getClaimableBalances.js
 
 const { Keypair, Horizon } = require('stellar-sdk');
 const { mnemonicToSeedSync } = require('bip39');
@@ -6,7 +6,7 @@ const { derivePath } = require('ed25519-hd-key');
 const axios = require('axios');
 
 const server = new Horizon.Server("https://api.mainnet.minepi.com", {
-    httpClient: axios.create({ timeout: 30000 }) // Timeout 30 seconds
+    httpClient: axios.create({ timeout: 30000 })
 });
 
 const createKeypairFromMnemonic = (mnemonic) => {
@@ -33,18 +33,9 @@ module.exports = async (req, res) => {
         const keypair = createKeypairFromMnemonic(mnemonic);
         const response = await server.claimableBalances().claimant(keypair.publicKey()).limit(100).call();
 
-        const balances = response.records.map(r => ({
-            id: r.id,
-            amount: r.amount,
-            asset: "PI"
-        }));
+        const balances = response.records.map(r => ({ id: r.id, amount: r.amount, asset: "PI" }));
 
-        return res.status(200).json({
-            success: true,
-            balances,
-            publicKey: keypair.publicKey()
-        });
-
+        return res.status(200).json({ success: true, balances, publicKey: keypair.publicKey() });
     } catch (error) {
         console.error("Error in getClaimableBalances:", error);
 
