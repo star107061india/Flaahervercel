@@ -1,14 +1,16 @@
 // File: api/getClaimableBalances.js
 
-const { Keypair, Horizon } = require('stellar-sdk');
-const { mnemonicToSeedSync } = require('bip39');
-const { derivePath } = require('ed25519-hd-key');
-const axios = require('axios');
+import { Keypair, Horizon } from 'stellar-sdk';
+import { mnemonicToSeedSync } from 'bip39';
+import { derivePath } from 'ed25519-hd-key';
+import axios from 'axios';
 
+// Horizon Server Setup
 const server = new Horizon.Server("https://api.mainnet.minepi.com", {
     httpClient: axios.create({ timeout: 30000 })
 });
 
+// Function to create keypair from mnemonic
 const createKeypairFromMnemonic = (mnemonic) => {
     try {
         return Keypair.fromRawEd25519Seed(
@@ -19,23 +21,39 @@ const createKeypairFromMnemonic = (mnemonic) => {
     }
 };
 
-module.exports = async (req, res) => {
+// API Handler
+export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ success: false, error: 'Method Not Allowed' });
     }
 
     try {
-        const { mnemonic } = req.body;
+        // Parse body safely
+        const { mnemonic } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+
         if (!mnemonic) {
             return res.status(400).json({ success: false, error: "Keyphrase is required." });
         }
 
+        // Generate keypair
         const keypair = createKeypairFromMnemonic(mnemonic);
+
+        // Fetch claimable balances
         const response = await server.claimableBalances().claimant(keypair.publicKey()).limit(100).call();
 
-        const balances = response.records.map(r => ({ id: r.id, amount: r.amount, asset: "PI" }));
+        // Format balances
+        const balances = response.records.map(r => ({
+            id: r.id,
+            amount: r.amount,
+            asset: "PI"
+        }));
 
-        return res.status(200).json({ success: true, balances, publicKey: keypair.publicKey() });
+        return res.status(200).json({
+            success: true,
+            balances,
+            publicKey: keypair.publicKey()
+        });
+
     } catch (error) {
         console.error("Error in getClaimableBalances:", error);
 
@@ -50,6 +68,6 @@ module.exports = async (req, res) => {
             detailedError = error.message;
         }
 
-        return res.status(200).json({ success: false, error: detailedError });
+        return res.status(500).json({ success: false, error: detailedError });
     }
-};
+}
