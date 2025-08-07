@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/submitTransaction.js": {
+      "maxDuration": 30
+    }
+  }
+}
