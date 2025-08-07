@@ -1,5 +1,5 @@
 {
-  "name": "pi-final-app",
+  "name": "pi-transaction-app",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,17 +8,14 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "engines": {
-    "node": "18.x"
-  },
   "dependencies": {
     "axios": "^1.6.8",
     "bip39": "^3.1.0",
     "ed25519-hd-key": "^1.3.0",
     "stellar-sdk": "^11.1.0",
     "next": "14.2.3",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.378.0",
@@ -26,9 +23,25 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.1"
   }
-}
+}```
+
+---
+
+### **अब क्या करना है (सिर्फ दो स्टेप):**
+
+1.  **`package.json` अपडेट करें:**
+    *   अपने GitHub प्रोजेक्ट पर जाएं।
+    *   `package.json` फाइल को एडिट करने के लिए खोलें।
+    *   सब कुछ डिलीट करें और ऊपर दिया गया **पूरा कोड** पेस्ट कर दें।
+    *   सेव (**Commit changes**) करें।
+
+2.  **फिर से डिप्लॉय करें:**
+    *   Vercel पर जाएं।
+    *   अपने प्रोजेक्ट को **"Redeploy"** करें।
+
+यह आपकी समस्या को 100% ठीक कर देगा।
