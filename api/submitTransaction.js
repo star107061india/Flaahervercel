@@ -1,6 +1,6 @@
 // File: api/submitTransaction.js (For Vercel)
 
-const { Keypair, Horizon, Operation, TransactionBuilder, Asset } = require('stellar-sdk');
+const { Keypair, Horizon, Operation, TransactionBuilder, Asset } = require('@stellar/stellar-sdk');
 const { mnemonicToSeedSync } = require('bip39');
 const { derivePath } = require('ed25519-hd-key');
 const axios = require('axios');
